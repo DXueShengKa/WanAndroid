@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.yzz.androidcommonlib">
+
+    <application>
+
+        <activity
+            android:name="com.previewlibrary.GPVideoPlayerActivity"
+            />
+        <activity
+            android:name="com.previewlibrary.GPreviewActivity"
+            />
+    </application>
+
+</manifest>

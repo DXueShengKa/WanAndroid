@@ -1,0 +1,296 @@
+package com.hc.wanandroid.ui
+
+import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.*
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.hc.wanandroid.db.AppDatabase
+import com.hc.wanandroid.db.RemoteMediatorDB
+import com.hc.wanandroid.db.RemoteServer
+import com.hc.wanandroid.entity.MTag
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
+import javax.inject.Inject
+
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HomeUI2() {
+    val vm: HomeViewModel2 = hiltViewModel()
+
+    val pagingItems: LazyPagingItems<MTag> = vm.pagerFlow2.collectAsLazyPagingItems()
+
+    Log.d("HomeViewModel2", "${pagingItems.itemCount}")
+
+    LaunchedEffect(Unit) {
+        Log.d("HomeViewModel2", "LaunchedEffect")
+    }
+
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(pagingItems.loadState.refresh == LoadState.Loading),
+        onRefresh = {
+            pagingItems.refresh()
+        }
+    ) {
+
+        if (pagingItems.itemCount > 0)
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp)
+        ) {
+
+            stickyHeader("stickyHeader") {
+
+                val s = rememberSaveable {
+                    Log.d("HomeViewModel2", "rememberSaveable")
+                    System.currentTimeMillis().toString()
+                }
+
+                Row(
+                    Modifier
+                        .fillParentMaxWidth()
+                        .height(50.dp)
+                ) {
+
+                    Text("Text(\"${s}\")")
+
+                }
+            }
+
+
+            items(pagingItems) {
+                it ?: return@items
+                Card(Modifier.fillParentMaxWidth()) {
+                    Column {
+
+                        Text(it.id.toString())
+
+                        Text(it.sName)
+
+                        Text(it.tags.toString())
+                    }
+                }
+            }
+
+            item("底层") {
+                when (val append = pagingItems.loadState.append) {
+                    is LoadState.Loading -> {
+                        CircularProgressIndicator()
+                    }
+                    is LoadState.Error -> {
+                        Snackbar {
+                            Text(append.error.toString())
+                        }
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun HomeUI3() {
+    val vm: HomeViewModel2 = hiltViewModel()
+
+
+    val s = rememberSaveable {
+        Log.d("HomeViewModel2", "rememberSaveable")
+        System.currentTimeMillis().toString()
+    }
+
+//    val scrollState = rememberSaveable {
+//        System.currentTimeMillis().toString()
+//    }
+
+    val c by vm.tFlow.collectAsState()
+
+    val listState: LazyListState = rememberLazyListState(
+//        vm.scrollState[0],
+//        vm.scrollState[1]
+    )
+
+    LaunchedEffect(Unit) {
+        Log.d("HomeViewModel2", "LaunchedEffect")
+    }
+
+
+//    LaunchedEffect(listState) {
+//        snapshotFlow { listState.isScrollInProgress }
+//            .distinctUntilChanged()
+//            .filter { !it }
+//            .collect {
+//                vm.scrollState[0] = listState.firstVisibleItemIndex
+//                vm.scrollState[1] = listState.firstVisibleItemScrollOffset
+//            }
+//    }
+
+    LazyColumn(
+        state = listState,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+        contentPadding = PaddingValues(horizontal = 20.dp)
+    ) {
+        stickyHeader("stickyHeader") {
+            Row(
+                Modifier
+                    .fillParentMaxWidth()
+                    .height(50.dp)
+            ) {
+                Text(s)
+            }
+        }
+        items(c) {
+            Text(text = it.toString())
+            Divider()
+        }
+
+
+    }
+}
+
+@HiltViewModel
+class HomeViewModel2 @Inject constructor(
+    appDatabase: AppDatabase
+) : ViewModel() {
+
+    init {
+        Log.d("HomeViewModel2","init")
+    }
+    private val mTagDao = appDatabase.mTagDao()
+
+    /* @OptIn(ExperimentalPagingApi::class)
+     val pagerFlow = Pager(
+         config = PagingConfig(pageSize = 10,initialLoadSize = 20),
+         remoteMediator = object : RemoteMediator<Int,MTag>(){
+             private val remoteKeyDao = appDatabase.remoteKeyDao()
+             private val keyLabel = "标签"
+
+             override suspend fun load(
+                 loadType: LoadType,
+                 state: PagingState<Int, MTag>
+             ): MediatorResult {
+
+                 Log.w("RemoteMediator","loadType $loadType PagingState $state")
+
+                 try {
+
+                     val loadKey = when(loadType){
+                         LoadType.PREPEND -> return MediatorResult.Success(true)
+                         LoadType.APPEND->{
+                             remoteKeyDao.queryNextKey(keyLabel)
+                         }
+                         LoadType.REFRESH-> {
+                             null
+                         }
+                     }
+
+                     Log.w("RemoteMediator","loadKey $loadKey")
+
+                     val key = if (loadKey == null){
+                         remoteKeyDao.insertOne(RemoteKey(keyLabel,0))
+                         0
+                     } else loadKey
+
+                     val pageResult = MTag.get(key,state.config.pageSize)
+
+                     if (pageResult.isEmpty()) return MediatorResult.Success(true)
+
+                     appDatabase.withTransaction {
+
+                         if (loadType == LoadType.REFRESH){
+                             mTagDao.clearAll()
+                         }
+
+                         remoteKeyDao.update(keyLabel,key + 1)
+
+                         mTagDao.insertAll(pageResult)
+                     }
+
+                     return MediatorResult.Success(false)
+                 }catch (e:Exception){
+                     return MediatorResult.Error(e)
+                 }
+             }
+
+
+             override suspend fun initialize(): InitializeAction {
+                 val t = remoteKeyDao.queryUpdateTime(keyLabel)?:0
+                 //10秒内再次加宰不需要重新请求
+                 return if (System.currentTimeMillis() - t > 1000*10 )
+                     //
+                     InitializeAction.LAUNCH_INITIAL_REFRESH
+                 else
+                     InitializeAction.SKIP_INITIAL_REFRESH
+             }
+
+         }
+
+     ) {
+         mTagDao.pagingSource()
+     }.flow*/
+
+
+
+    val tFlow = mTagDao.getAll().stateIn(
+        viewModelScope, SharingStarted.Lazily, emptyList()
+    )
+
+    @OptIn(ExperimentalPagingApi::class)
+    val pagerFlow2 = Pager(
+        config = PagingConfig(pageSize = 10,initialLoadSize = 20),
+        remoteMediator = RemoteMediatorDB<MTag>(appDatabase,"标签",object : RemoteServer<MTag> {
+            private var mTags : List<MTag>? = null
+
+            @Throws(Exception::class)
+            override suspend fun loadData(
+                loadType: LoadType,
+                state: PagingState<Int, MTag>,
+                loadKey: Int
+            ) {
+                mTags = MTag.get(loadKey,state.config.pageSize)
+            }
+
+            override fun isEnd(): Boolean {
+                return mTags?.isEmpty()?:true
+            }
+
+            override suspend fun clearDB() {
+                mTagDao.clearAll()
+            }
+
+            override suspend fun saveToDB() {
+                mTagDao.insertAll(mTags?:return)
+            }
+        })
+
+    ) {
+        mTagDao.pagingSource()
+    }.flow.cachedIn(viewModelScope)
+
+
+}
+

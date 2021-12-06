@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="DialogWindowTheme.My" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:windowBackgroundBlurRadius">30dp</item>
+    </style>
+</resources>
