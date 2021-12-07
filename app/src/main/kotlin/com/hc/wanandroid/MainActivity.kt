@@ -9,7 +9,9 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -44,6 +46,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
 import com.hc.wanandroid.navigation.LocalNavController
 import com.hc.wanandroid.navigation.Routes
@@ -143,6 +146,7 @@ class MainActivity : ComponentActivity() {
                             textAlign = TextAlign.Center
                         )
                     }
+                    Spacer(Modifier.navigationBarsHeight())
                 }
             },
             drawerState = drawerState
@@ -169,7 +173,7 @@ class MainActivity : ComponentActivity() {
             ){
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.LocationUI.name,
+                    startDestination = Routes.JdUI.name,
                     modifier = Modifier.padding(it),
                     builder = navGraphBuilder(navController)
                 )

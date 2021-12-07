@@ -112,67 +112,8 @@ fun LoginUI3() {
 */
  */
 
-
-
 @Composable
 fun LoginUI() {
-//    val lo = LocalLifecycleOwner.current
-    val c = remember {
-        /*lo.lifecycle.addObserver(object : LifecycleEventObserver {
-            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-                Log.e("LocalLifecycleOwner","$source $event")
-            }
-        })*/
-        BrowsePictureState<Uri>()
-    }
-
-    val l = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
-        c.addAll(it)
-    }
-
-    Column {
-
-        BrowsePicture(
-            Modifier
-                .fillMaxSize()
-                .weight(1f),
-            c
-        ) { contentModifier,page ->
-            Image(
-                rememberImagePainter(data = page), null,
-                contentModifier.fillMaxSize().border(1.dp, Color.Green)
-            )
-        }
-
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .height(70.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(10.dp)
-        ) {
-            Text("添加", Modifier.clickable {
-                l.launch("image/*")
-            })
-
-        }
-
-        Spacer(Modifier.navigationBarsHeight())
-    }
-}
-
-
-
-@Composable
-fun LoginUI2() {
-    val url = remember {
-        mutableStateListOf<Uri>()
-    }
-    val l = rememberLauncherForActivityResult(ActivityResultContracts.GetMultipleContents()) {
-        url.addAll(it)
-    }
-    l.launch("image/*")
-
 
     Column(
         Modifier.fillMaxSize(),

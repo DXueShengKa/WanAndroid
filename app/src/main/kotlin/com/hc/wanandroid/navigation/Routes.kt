@@ -33,7 +33,9 @@ enum class Routes {
     MyInfo,
     QrUI,
     VideoPlayer,
-    LocationUI;
+    LocationUI,
+    MyBrowsePicture,
+    JdUI;
 }
 
 
@@ -99,6 +101,14 @@ fun navGraphBuilder(navController: NavController): NavGraphBuilder.() -> Unit = 
 
     composable(Routes.QrUI.name){
         QrUI()
+    }
+
+    composable(Routes.MyBrowsePicture.name){
+        MyBrowsePicture()
+    }
+
+    composable(Routes.JdUI.name){
+        JdUI()
     }
 
 }

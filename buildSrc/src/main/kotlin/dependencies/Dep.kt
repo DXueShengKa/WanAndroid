@@ -100,7 +100,7 @@ object Dep {
 
         @JvmField
         val dependency = arrayOf(
-            runtimeLiveData, material, ui, foundation, uiUtil, material3,
+            runtimeLiveData, material, uiUtil, material3,
             pagingCompose, navigationCompose, constraintLayoutCompose, activityCompose,
             viewModelCompose
         )

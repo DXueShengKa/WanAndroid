@@ -13,10 +13,10 @@ import androidx.compose.ui.unit.Dp
  * 把item分成两半
  * @param spacer 条目之间的间隔
  */
-fun LazyListScope.fixed2(count: Int, spacer: Dp? = null, content: @Composable (Int) -> Unit) {
+fun LazyListScope.fixed2(count: Int, spacer: Dp? = null, key : ((Int)->Any)? = null,content: @Composable (Int) -> Unit) {
 	val m = count % 2
 	val itemsCount = count / 2
-	items(if (m == 0) itemsCount else itemsCount + 1,{ it }) {
+	items(if (m == 0) itemsCount else itemsCount + 1, key) {
 		Row(Modifier.fillParentMaxWidth()) {
 			val x = it + it
 			val modifier = Modifier.weight(1f)
