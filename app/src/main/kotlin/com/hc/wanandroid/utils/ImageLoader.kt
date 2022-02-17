@@ -10,28 +10,6 @@ import coil.compose.LocalImageLoader
 import coil.request.ImageRequest
 
 
-@OptIn(ExperimentalCoilApi::class)
-@Composable
-fun rememberImagePainter2(
-    data: Any,
-    builder: ImageRequest.Builder.() -> Unit = {},
-): ImagePainter {
-
-    val context = LocalContext.current
-
-    val request = remember(data) {
-        ImageRequest.Builder(context)
-            .data(data)
-            .apply(builder)
-            .build()
-    }
-
-    return coil.compose.rememberImagePainter(
-        request,
-        LocalImageLoader.current,
-        ImagePainter.ExecuteCallback.Default
-    )
-}
 
 
 val LocalIsActiveNetworkMetered = compositionLocalOf { false }

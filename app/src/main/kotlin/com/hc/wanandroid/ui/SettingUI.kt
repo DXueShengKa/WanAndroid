@@ -132,7 +132,7 @@ fun Te() {
     ) {
         items(60) {
             val s = if (it % 2 == 0) 80 else 60
-            Card(Modifier.fillParentMaxWidth().height(s.dp)) {
+            Card(Modifier.fillMaxWidth().height(s.dp)) {
                 Text(it.toString())
             }
         }

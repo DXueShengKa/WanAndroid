@@ -2,8 +2,11 @@ package com.hc.wanandroid
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
+import android.icu.util.TimeUnit
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,6 +48,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
+import coil.ImageLoader
+import coil.dispose
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
@@ -63,6 +73,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+        val uploadWorkRequest = PeriodicWorkRequestBuilder<UploadWorker>(2L, java.util.concurrent.TimeUnit.MINUTES)
+            .build()
+        WorkManager
+            .getInstance(this)
+            .enqueue(uploadWorkRequest)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.navigationBarColor = android.graphics.Color.TRANSPARENT

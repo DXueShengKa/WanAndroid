@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.coroutineScope
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
@@ -165,7 +165,7 @@ private fun RenderContent(
                     )
                 ) { target ->
                     Image(
-                        rememberImagePainter(data = target), target
+                        rememberAsyncImagePainter(target), target
                     )
                 }
             ),

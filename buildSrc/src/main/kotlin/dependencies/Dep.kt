@@ -9,12 +9,12 @@ object Dep {
     const val desugarJdkLibs = "com.android.tools:desugar_jdk_libs:1.1.5"
 
     object Kotlin {
-        const val version = "1.6.0"
+        const val version = "1.6.10"
 
         /**
          * 协程
          */
-        private const val coroutinesVersion = "1.5.2"
+        private const val coroutinesVersion = "1.6.0"
         private const val serializationVersion = "1.3.1"
 
         const val stdlibJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
@@ -40,26 +40,16 @@ object Dep {
     }
 
     object AndroidX {
-        /**
-         * 兼容包
-         */
-        const val appcompat = "androidx.appcompat:appcompat:1.3.1"
-        const val material = "com.google.android.material:material:1.2.1"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-        const val cardView = "androidx.cardview:cardview:1.0.0"
-        const val recyclerView = "androidx.recyclerview:recyclerview:1.2.0"
-        const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.3"
-        const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-        const val annotation = "androidx.annotation:annotation:1.1.0"
+
+        const val workKtx = "androidx.work:work-runtime-ktx:2.7.1"
         const val paging = "androidx.paging:paging-runtime-ktx:3.1.0-alpha04"
         const val core = "androidx.core:core:1.7.0"
-        const val dynamicAnimation = "androidx.dynamicanimation:dynamicanimation-ktx:1.0.0"
         const val startup = "androidx.startup:startup-runtime:1.0.0"
         const val splashscreen = "androidx.core:core-splashscreen:1.0.0-alpha02"
-
+        const val glance = "androidx.glance:glance-appwidget:1.0.0-alpha02"
 
         object Room {
-            private const val version = "2.4.0-rc01"
+            private const val version = "2.4.1"
             const val roomKtx = "androidx.room:room-ktx:$version"
             const val paging = "androidx.room:room-paging:$version"
             const val compiler = "androidx.room:room-compiler:$version"
@@ -81,19 +71,19 @@ object Dep {
     }
 
     object Compose {
-        const val version = "1.1.0-beta04"
+        const val version = "1.2.0-alpha03"
         const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:$version"
         const val material = "androidx.compose.material:material:$version"
         const val ui = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
         const val uiUtil = "androidx.compose.ui:ui-util:$version"
-        const val material3 = "androidx.compose.material3:material3:1.0.0-alpha02"
+        const val material3 = "androidx.compose.material3:material3:1.0.0-alpha05"
 
         const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha14"
-        const val navigationCompose = "androidx.navigation:navigation-compose:2.4.0-beta02"
+        const val navigationCompose = "androidx.navigation:navigation-compose:2.5.0-alpha02"
 
-        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0-rc02"
+        const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0"
         const val activityCompose = "androidx.activity:activity-compose:1.4.0"
 
         const val viewModelCompose = "androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0"
@@ -108,7 +98,7 @@ object Dep {
 
 
     object Accompanist {
-        private const val version = "0.21.4-beta"
+        private const val version = "0.24.2-alpha"
         const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
         const val insets = "com.google.accompanist:accompanist-insets:$version"
@@ -136,7 +126,6 @@ object Dep {
             private const val version = "1.0.0"
             const val hiltCompiler = "androidx.hilt:hilt-compiler:$version"
             const val hiltWork = "androidx.hilt:hilt-work:$version"
-            const val hiltNavigation = "androidx.hilt:hilt-navigation:$version"
             const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-beta01"
         }
     }
@@ -150,7 +139,7 @@ object Dep {
     }
 
     object Ksp {
-        const val version = "${Kotlin.version}-1.0.1"
+        const val version = "${Kotlin.version}-1.0.2"
         const val api = "com.google.devtools.ksp:symbol-processing-api:$version"
     }
 
@@ -159,7 +148,6 @@ object Dep {
     const val zxing = "com.google.zxing:core:3.4.1"
     const val exoplayer = "com.google.android.exoplayer:exoplayer:2.16.0"
     const val webrtc = "org.webrtc:google-webrtc:1.0.32006"
-    const val gson = "com.google.code.gson:gson:2.8.5"
-    const val coil = "io.coil-kt:coil-compose:1.4.0"
+    const val coil = "io.coil-kt:coil-compose:2.0.0-alpha08"
 
 }

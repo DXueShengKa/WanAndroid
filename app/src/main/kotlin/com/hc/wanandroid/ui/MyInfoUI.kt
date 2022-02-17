@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.hc.wanandroid.entity.CoinInfo
 import com.hc.wanandroid.entity.UserInfo
 import com.hc.wanandroid.net.UserApi
@@ -44,7 +44,7 @@ fun MyInfoUI() {
         if (vm.user.icon.isEmpty())
             Image(Icons.Default.Person, "头像", imgModifier)
         else
-            Image(rememberImagePainter(vm.user.icon), "头像", imgModifier)
+            Image(rememberAsyncImagePainter(vm.user.icon), "头像", imgModifier)
 
         Text(
             remember {

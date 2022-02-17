@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.common.BrowsePicture
 import com.google.accompanist.common.BrowsePictureState
 import com.google.accompanist.insets.navigationBarsHeight
@@ -76,7 +76,7 @@ fun LoginUI3() {
         ) { page ->
 
             Image(
-                rememberImagePainter(data = c[page]), null,
+                rememberAsyncImagePainter(data = c[page]), null,
                 Modifier
                     .fillMaxSize()
                     .border(1.dp, Color.Green)

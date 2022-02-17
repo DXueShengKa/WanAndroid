@@ -2,12 +2,13 @@ package com.hc.wanandroid
 
 import android.app.Application
 import android.util.Log
+import androidx.work.Configuration
 import dagger.hilt.android.HiltAndroidApp
 import kotlin.system.exitProcess
 
 
 @HiltAndroidApp
-class App : Application() {
+class App : Application(), Configuration.Provider {
 
     companion object {
         private var _app: App? = null
@@ -29,5 +30,9 @@ class App : Application() {
             exitProcess(-1)
         }
     }
+
+    override fun getWorkManagerConfiguration()=Configuration.Builder()
+        .setMinimumLoggingLevel(Log.DEBUG)
+        .build()
 
 }

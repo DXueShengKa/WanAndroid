@@ -6,7 +6,7 @@ buildscript {
         maven ("https://jitpack.io")
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.0.3")
+        classpath("com.android.tools.build:gradle:7.1.1")
         classpath(RootDep.kotlinGradlePlugin)
         classpath(RootDep.kotlinSerialization)
 

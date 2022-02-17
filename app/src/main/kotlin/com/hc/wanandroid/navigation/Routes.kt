@@ -35,7 +35,8 @@ enum class Routes {
     VideoPlayer,
     LocationUI,
     MyBrowsePicture,
-    JdUI;
+    JdUI,
+    LazyStaggeredUI;
 }
 
 
@@ -109,6 +110,10 @@ fun navGraphBuilder(navController: NavController): NavGraphBuilder.() -> Unit = 
 
     composable(Routes.JdUI.name){
         JdUI()
+    }
+
+    composable(Routes.LazyStaggeredUI.name){
+        LazyStaggeredUI()
     }
 
 }

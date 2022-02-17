@@ -4,11 +4,16 @@ package com.hc.wanandroid
 import com.hc.wanandroid.di.kotlinJson
 import com.hc.wanandroid.net.NetResult
 import kotlinx.serialization.decodeFromString
+import org.jsoup.Jsoup
 import org.junit.Test
+import java.io.File
 import java.time.LocalDate
 import java.time.Month
 import java.time.Year
 import java.time.YearMonth
+import java.util.*
+import java.util.function.Supplier
+import java.util.stream.Collector
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -20,8 +25,15 @@ class ExampleUnitTest {
 
     @Test fun run() {
 //        spSave(CoinInfo::class.java,"coinInfo")
-        ktJson()
-
+//        ktJson()
+    /*forEach {
+            println(it.text())
+            println(it.child(0).text())
+            println()
+        }*/
+//        boss()
+        val x = 11 shl 1
+        println(x)
     }
 
 

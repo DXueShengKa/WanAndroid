@@ -20,7 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.common.BrowsePicture
 import com.google.accompanist.common.BrowsePictureState
 import com.google.accompanist.insets.navigationBarsHeight
@@ -50,7 +50,7 @@ fun MyBrowsePicture() {
             c
         ) { contentModifier,page ->
             Image(
-                rememberImagePainter(data = page), null,
+                rememberAsyncImagePainter(page), null,
                 contentModifier.fillMaxSize().border(1.dp, Color.Green)
             )
         }

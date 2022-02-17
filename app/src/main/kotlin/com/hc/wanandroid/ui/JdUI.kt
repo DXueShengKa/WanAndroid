@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.Dimension
+import androidx.constraintlayout.compose.ExperimentalMotionApi
 import androidx.constraintlayout.compose.MotionLayout
 import com.google.accompanist.common.HorizonEquidistant
 import com.google.accompanist.common.fixed2
@@ -233,6 +234,8 @@ private fun Classify(modifier: Modifier = Modifier) {
     }
 }
 
+
+@OptIn(ExperimentalMotionApi::class)
 @Composable
 private fun Title(progress: Float, modifier: Modifier = Modifier) {
     MotionLayout(

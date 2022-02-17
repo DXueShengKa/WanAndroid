@@ -22,7 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -51,7 +51,7 @@ fun HomeUI(navController: NavController) {
             // verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
 
-            item("轮播图", banner(banners) { url ->
+            item ("轮播图",content = banner(banners) { url ->
                 navController.appNavigation { web(url) }
             })
 
@@ -142,7 +142,7 @@ private fun banner(
                     onClick(banners[page].url)
                 },
             ) {
-                Image(rememberImagePainter(banners[page].imagePath), null)
+                Image(rememberAsyncImagePainter(banners[page].imagePath), null)
             }
         }
     }

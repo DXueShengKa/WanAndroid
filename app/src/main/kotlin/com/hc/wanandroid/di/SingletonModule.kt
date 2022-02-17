@@ -7,6 +7,7 @@ import androidx.core.content.edit
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import coil.ImageLoader
 import coil.util.CoilUtils
 import com.hc.wanandroid.db.AppDatabase
 import com.hc.wanandroid.utils.converter_factory.asConverterFactory
@@ -50,7 +51,6 @@ object SingletonModule {
                     Log.d(NetLog, it)
                 }.setLevel(HttpLoggingInterceptor.Level.BODY)
             )
-            .cache(CoilUtils.createDefaultCache(application))
             .connectTimeout(Duration.ofSeconds(10))
             .cookieJar(object : CookieJar {
                 private val map = mutableMapOf<String, List<Cookie>>()

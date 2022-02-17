@@ -17,7 +17,7 @@ plugins {
 
 android {
     compileSdk = Dep.Android.compileSdkVersion
-    buildToolsVersion = Dep.Android.buildToolsVersion
+//    buildToolsVersion = Dep.Android.buildToolsVersion
 
     defaultConfig {
         applicationId = "com.hc.wanandroid"
@@ -124,9 +124,12 @@ dependencies {
     implementation(Dep.Hilt.hiltAndroid)
     kapt(Dep.Hilt.hiltAndroidCompiler)
     implementation(Dep.Hilt.Jetpack.hiltNavigationCompose)
+    implementation(Dep.Hilt.Jetpack.hiltWork)
     kapt(Dep.Hilt.Jetpack.hiltCompiler)
 
+    implementation(Dep.AndroidX.workKtx)
     implementation(Dep.AndroidX.startup)
+    implementation(Dep.AndroidX.glance)
     implementation(Dep.AndroidX.Camera.camera2)
     implementation(Dep.AndroidX.Camera.lifecycle)
     implementation(Dep.AndroidX.Camera.view)

@@ -16,6 +16,7 @@ public final class MJni {
     public  static void a(){
         var a = Stream.of("").toArray(String[]::new);
 
+        String[] s = new String[6];
     }
 
 
