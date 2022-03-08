@@ -13,7 +13,10 @@ plugins {
 
     id("com.google.devtools.ksp")
     id("com.google.protobuf") version "0.8.17"
+
+    id("org.mozilla.rust-android-gradle.rust-android") version "0.9.2"
 }
+
 
 android {
     compileSdk = Dep.Android.compileSdkVersion
@@ -25,24 +28,23 @@ android {
         targetSdk = Dep.Android.targetSdkVersion
         versionCode = 1
         versionName = "1.0"
-
+        ndkVersion = "22.0.7026061"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        /* externalNativeBuild {
-             cmake {
-                 cppFlags += "-std=c++17"
-             }
-         }*/
+        externalNativeBuild {
+            cmake {
+                cppFlags += "-std=c++17"
+            }
+        }
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments(
+                arguments +=
                     mapOf(
                         "room.schemaLocation" to File(projectDir, "数据库结构").toString(),
                         "room.incremental" to "true",
                         "room.expandProjection" to "true"
                     )
-                )
             }
         }
     }
@@ -72,12 +74,12 @@ android {
         )
     }
 
-    /*externalNativeBuild {
+    externalNativeBuild {
         cmake {
             path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.10.2"
+            version = "3.18.1"
         }
-    }*/
+    }
 
     buildFeatures {
         compose = true
@@ -166,3 +168,33 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.2")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.3.0")
 }
+
+apply(plugin = "org.mozilla.rust-android-gradle.rust-android")
+
+cargo {
+    module = "../rust"
+    libname = "wanrust"
+    targets = listOf("arm64", "x86_64")
+    apiLevel = Dep.Android.minSdkVersion
+}
+
+
+tasks.whenTaskAdded {
+    if (name == "javaPreCompileDebug" || name == "javaPreCompileRelease")
+        dependsOn("cargoBuild")
+}
+
+/*afterEvaluate {
+    // The `cargoBuild` task isn't available until after evaluation.
+    android.applicationVariants.forEach { variant ->
+        var productFlavor = ""
+        variant.productFlavors.forEach {
+            productFlavor += it.name.capitalize()
+        }
+        val buildType = variant.buildType.name.capitalize()
+//        tasks.register("generate${productFlavor}${buildType}Assets"){
+//            dependsOn(task("cargoBuild"))
+//        }
+        tasks["generate${productFlavor}${buildType}Assets"].dependsOn(task("cargoBuild"))
+    }
+}*/

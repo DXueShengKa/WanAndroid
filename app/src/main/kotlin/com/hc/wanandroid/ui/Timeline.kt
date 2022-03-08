@@ -1,153 +1,114 @@
 package com.hc.wanandroid.ui
 
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyGridScope
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.material.Icon
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.common.HorizonEquidistant
-import com.google.accompanist.common.HorizonSplitBox
-import com.google.accompanist.flowlayout.FlowMainAxisAlignment
-import com.google.accompanist.flowlayout.FlowRow
-import com.google.accompanist.flowlayout.SizeMode
 
 
 //@Preview(showBackground = true)
 @Composable
 fun TimelineUI() {
 
-    TwoTexts("111","222")
+    val density = LocalDensity.current
 
-/*    Column(Modifier.fillMaxSize()) {
-        LazyColumn {
-            item {
-                Box(Modifier.fillParentMaxWidth().padding(vertical = 10.dp)) {
-                    Text(stringResource(R.string.album_management))
-                    Icon(
-                        painterResource(R.mipmap.ic_timeline_calendar),
-                        null,
-                        Modifier.size(18.dp).align(
-                            Alignment.CenterEnd
-                        ),
-                        Color.Green
-                    )
-                }
-            }
-            items(10) {
-                Row(Modifier.fillParentMaxWidth().height(IntrinsicSize.Min)) {
-                    TimelineItem()
-                }
-            }
-        }
-    }*/
-}
+    val stete = remember { TimelineState(density) }
 
+    Box(
+        Modifier
+            .fillMaxSize()
+            .nestedScroll(stete.nestedScrollConnection)
+    ) {
 
-@Composable
-fun TwoTexts(
-    text1: String,
-    text2: String,
-    modifier: Modifier = Modifier
-) {
-    Row(modifier = modifier) {
-        /*  Text(
-              modifier = Modifier
-                  .weight(1f)
-                  .padding(start = 4.dp)
-                  .wrapContentWidth(Alignment.Start),
-              text = text1
-          )*/
-        Box(
-            modifier = Modifier.fillMaxHeight().width(1.dp).background(Color.Red)
-        )
-        Column(Modifier.weight(1f).border(1.dp, Color.Black)){
+        val lazy = rememberLazyListState()
 
-            Box(Modifier.fillMaxWidth()) {
-                Text("2020-2-1")
-                Image(
-                    painterResource(com.hc.wanandroid.R.drawable.ybmq),
-                    null,
-                    Modifier.align(Alignment.CenterEnd),
+        stete.firstIndex = lazy.firstVisibleItemIndex
+
+        LazyColumn(state = lazy, contentPadding = PaddingValues(top = stete.topBarHeightDp)) {
+            items(100) { index ->
+                Text(
+                    "I'm item $index", modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
                 )
             }
+        }
 
-            Text("ssss",Modifier.padding(vertical = 10.dp))
-
-            HorizonEquidistant{
-                Box(Modifier.size(70.dp).background(Color.Green))
-            }
-          
-     /*       FlowRow(
-
-                mainAxisSize = SizeMode.Wrap,
-                mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
-                crossAxisSpacing = 5.dp
-            ) {
-                repeat(9){
-                    Box(Modifier.size(80.dp).background(Color.Green))
-                }
-            }*/
+        Box(
+            Modifier
+                .height(stete.topBarHeightDp)
+                .fillMaxWidth()
+                .background(Color.DarkGray)
+        ) {
+            Text("当前高度 ${stete.topBarHeightDp}")
         }
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-private fun RowScope.TimelineItem() {
+private class TimelineState(
+    private val density: Density
+) {
+    private val minHeight = 56.dp
+    private val maxHeight = 200.dp
 
-    Column(Modifier.width(20.dp).border(1.dp, Color.Red), horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(
-            Icons.Default.MoreVert,
-            null,
-            Modifier.size(15.dp),
-            Color.Green
-        )
-        Box(Modifier.fillMaxHeight().width(2.dp).background(Color.Green))
+    private val minHeightPx: Float
+    private val maxHeightPx: Float
+
+    var firstIndex = 0
+
+    init {
+        with(density) {
+            minHeightPx = minHeight.toPx()
+            maxHeightPx = maxHeight.toPx()
+        }
     }
 
-    Column(Modifier.weight(1f).border(1.dp, Color.Black)) {
-        Box(Modifier.fillMaxWidth()) {
-            Text("2020-2-1")
-            Image(
-                Icons.Default.AccountBox,
-                null,
-                Modifier.align(Alignment.CenterEnd),
-            )
-        }
+    private var topBarHeight by mutableStateOf(maxHeightPx)
 
-        Text("ssss",Modifier.padding(vertical = 10.dp))
+    val topBarHeightDp: Dp get() = with(density) { topBarHeight.toDp() }
 
-        FlowRow(
-            Modifier.fillMaxWidth(),
-            mainAxisSize = SizeMode.Wrap,
-            mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
-            crossAxisSpacing = 5.dp
-        ) {
-            repeat(9){
-                Box(Modifier.size(80.dp).background(Color.Green))
+    //嵌套滑动
+    val nestedScrollConnection = object : NestedScrollConnection {
+        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+            //只有在列表滑倒首位时才处理滑动
+            if (firstIndex != 0) return Offset.Zero
+            //y轴滑动距离
+            val delta = available.y
+            //计算滑动后的高度变化
+            val newHeight = topBarHeight + delta
+            //高度小于最低值时不处理
+            if (newHeight < minHeightPx) {
+                topBarHeight = minHeightPx
+                return Offset.Zero
             }
+            //高度大于最高值时不处理
+            if (newHeight > maxHeightPx) {
+                topBarHeight = maxHeightPx
+                return Offset.Zero
+            }
+
+            topBarHeight = newHeight
+            //消耗y轴的滑动
+            return Offset(x = 0f,y = delta)
         }
     }
+
 }

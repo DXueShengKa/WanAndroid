@@ -3,15 +3,14 @@ package com.hc.wanandroid;
 import java.util.stream.Stream;
 
 public final class MJni {
-  /*  static {
+    static {
         System.loadLibrary("cppdemo");
     }
 
     public native static String stringFromJNI();
 
-    public native static String addJNI(int a,int b);
 
-    public native static String[] getUrls();*/
+    public native static String[] getUrls(int size);
 
     public  static void a(){
         var a = Stream.of("").toArray(String[]::new);

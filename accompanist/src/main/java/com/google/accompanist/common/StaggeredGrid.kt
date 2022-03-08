@@ -38,8 +38,8 @@ fun LazyStaggeredGrid(
     contentPadding: PaddingValues = PaddingValues(),
     content: StaggeredGridScope.() -> Unit,
 ) {
-    val scope = remember { StaggeredGridScopeImpl() }
-    scope.apply(content)
+    val scope = StaggeredGridScopeImpl().apply(content)
+
     BoxWithConstraints(
         modifier = modifier
     ) {

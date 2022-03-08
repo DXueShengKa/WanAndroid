@@ -7,8 +7,10 @@ import androidx.core.content.edit
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
-import coil.ImageLoader
-import coil.util.CoilUtils
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.hc.wanandroid.DbWorker
 import com.hc.wanandroid.db.AppDatabase
 import com.hc.wanandroid.utils.converter_factory.asConverterFactory
 import dagger.Module
@@ -125,13 +127,22 @@ object SingletonModule {
     @Singleton
     fun providesRoom(application: Application): AppDatabase {
 
-        return Room.databaseBuilder(application, AppDatabase::class.java, "wa.db")
+        return Room.databaseBuilder(application, AppDatabase::class.java, AppDatabase.DB_NAME)
             .addCallback(object : RoomDatabase.Callback() {
-                private val CALLBACK_TAG = "RoomDatabase.Callback"
+                private val CALLBACK_TAG = "RoomDatabaseCallback"
 
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
                     Log.d(CALLBACK_TAG, "onCreate")
+
+                    WorkManager
+                        .getInstance(application)
+                        .enqueueUniqueWork(
+                            AppDatabase.DB_NAME,
+                            ExistingWorkPolicy.APPEND,
+                            OneTimeWorkRequest.from(DbWorker::class.java)
+                        )
+
                 }
 
                 override fun onDestructiveMigration(db: SupportSQLiteDatabase) {
@@ -146,5 +157,4 @@ object SingletonModule {
             })
             .build()
     }
-
 }

@@ -1,9 +1,12 @@
 package com.hc.wanandroid.ui
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.*
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.rememberScrollState
@@ -19,14 +22,28 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.core.location.LocationManagerCompat
 import com.hc.wanandroid.App
+import com.hc.wanandroid.utils.ToastUtils
 import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+
 @Composable
 fun LocationUI() {
     Column(Modifier.verticalScroll(rememberScrollState())) {
-        val locationState = remember { LocationState() }
+        val l = rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){ map ->
+            if (map.entries.any { !it.value })
+                ToastUtils.showShort("权限被拒绝")
+        }
+        val locationState = remember {
+            l.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+            LocationState()
+        }
         TextButton({
             locationState.getCurrentLocation(true)
         }, enabled = locationState.isNotLocation) {

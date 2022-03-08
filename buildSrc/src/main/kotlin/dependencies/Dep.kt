@@ -71,7 +71,7 @@ object Dep {
     }
 
     object Compose {
-        const val version = "1.2.0-alpha03"
+        const val version = "1.2.0-alpha04"
         const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:$version"
         const val material = "androidx.compose.material:material:$version"
         const val ui = "androidx.compose.ui:ui:$version"

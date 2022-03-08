@@ -1,12 +1,12 @@
 #include <jni.h>
 #include <string>
 #include <vector>
-#include "Us.h"
+#include <android/log.h>
 
 using namespace std;
 
 extern "C" jstring
-Java_com_yzz_appdemo_MJni_stringFromJNI(
+Java_com_hc_wanandroid_MJni_stringFromJNI(
         JNIEnv *env, jclass clazz
 ) {
 
@@ -15,27 +15,15 @@ Java_com_yzz_appdemo_MJni_stringFromJNI(
 }
 
 
-extern "C" JNIEXPORT jstring JNICALL
-Java_com_yzz_appdemo_MJni_addJNI(
-        JNIEnv *env, jclass clazz, jint a, jint b
-) {
-    jint i = a + b;
-
-    Us us = {};
-
-    us.age = i;
-    us.s = '2';
-
-    return env->NewStringUTF(us.toString().c_str());
-}
-
 extern "C"
 JNIEXPORT jobjectArray JNICALL
-Java_com_yzz_appdemo_MJni_getUrls(JNIEnv *env, jclass clazz) {
+Java_com_hc_wanandroid_MJni_getUrls(JNIEnv *env, jclass clazz,jint size) {
+
+    __android_log_print(ANDROID_LOG_DEBUG,"jni---cpp","1ssss %d",size);
+
     jclass elementClass = env->FindClass("java/lang/String");
 
     vector<jstring> is;
-    int size = 5;
 
     is.reserve(size);
 

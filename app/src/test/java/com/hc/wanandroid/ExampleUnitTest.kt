@@ -32,8 +32,6 @@ class ExampleUnitTest {
             println()
         }*/
 //        boss()
-        val x = 11 shl 1
-        println(x)
     }
 
 

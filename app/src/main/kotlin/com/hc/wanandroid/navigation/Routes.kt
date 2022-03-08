@@ -14,6 +14,7 @@ import androidx.navigation.NavType
 import androidx.navigation.activity
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.hc.wanandroid.R
 import com.hc.wanandroid.component.ComposableWeb
 import com.hc.wanandroid.ui.*
 import com.hc.wanandroid.utils.video.VideoPlayer
@@ -36,7 +37,9 @@ enum class Routes {
     LocationUI,
     MyBrowsePicture,
     JdUI,
-    LazyStaggeredUI;
+    LazyStaggeredUI,
+    TimelineUI,
+    RustJniUI
 }
 
 
@@ -116,6 +119,13 @@ fun navGraphBuilder(navController: NavController): NavGraphBuilder.() -> Unit = 
         LazyStaggeredUI()
     }
 
+    composable(Routes.TimelineUI.name){
+        TimelineUI()
+    }
+
+    composable(Routes.RustJniUI.name){
+        RustJniUI()
+    }
 }
 
 @OptIn(ExperimentalContracts::class)

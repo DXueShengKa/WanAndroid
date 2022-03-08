@@ -1,36 +1,19 @@
 package com.hc.wanandroid
 
-import android.Manifest
 import android.app.Activity
-import android.app.AlertDialog
-import android.icu.util.TimeUnit
 import android.os.Bundle
-import android.util.Log
-import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.DrawerValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.rememberDrawerState
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawer
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.InternalComposeApi
 import androidx.compose.runtime.currentComposer
@@ -48,13 +31,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import coil.ImageLoader
-import coil.dispose
-import coil.load
-import coil.transform.CircleCropTransformation
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
@@ -73,11 +53,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-        val uploadWorkRequest = PeriodicWorkRequestBuilder<UploadWorker>(2L, java.util.concurrent.TimeUnit.MINUTES)
-            .build()
-        WorkManager
-            .getInstance(this)
-            .enqueue(uploadWorkRequest)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.navigationBarColor = android.graphics.Color.TRANSPARENT
@@ -106,14 +81,6 @@ class MainActivity : ComponentActivity() {
 
         }
 
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            Log.e(TAG, it.toString())
-        }.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-        )
     }
 
     @Composable
@@ -188,7 +155,7 @@ class MainActivity : ComponentActivity() {
             ){
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.JdUI.name,
+                    startDestination = Routes.RustJniUI.name,
                     modifier = Modifier.padding(it),
                     builder = navGraphBuilder(navController)
                 )
