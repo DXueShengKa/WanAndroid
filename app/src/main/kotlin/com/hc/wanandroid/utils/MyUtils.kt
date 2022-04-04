@@ -137,3 +137,5 @@ private fun AnnotatedString.Builder.htmlElement(e: Element){
         }
     }
 }
+
+inline infix fun <T, reified R> Array<T>.map(transform: (T) -> R) = Array(size){ transform(this[it]) }

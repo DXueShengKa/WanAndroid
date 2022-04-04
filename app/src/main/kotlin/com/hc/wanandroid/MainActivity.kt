@@ -8,7 +8,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -25,23 +27,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.insets.navigationBarsHeight
-import com.google.accompanist.insets.statusBarsPadding
 import com.hc.wanandroid.navigation.LocalNavController
 import com.hc.wanandroid.navigation.Routes
 import com.hc.wanandroid.navigation.navGraphBuilder
-import com.hc.wanandroid.utils.LocalIsActiveNetworkMetered
 import com.hc.wanandroid.utils.networkCallback
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,16 +48,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
-
+1
         WindowCompat.setDecorFitsSystemWindows(window, false)
         window.navigationBarColor = android.graphics.Color.TRANSPARENT
 
-//        WindowInsetsControllerCompat(window,window.decorView).apply {
-//            isAppearanceLightStatusBars = true
-//            isAppearanceLightNavigationBars = true
-//        }
-
-        networkCallback(this, this, LocalIsActiveNetworkMetered::provides)
 
         setContent {
             val isDarkTheme = isSystemInDarkTheme()
@@ -96,9 +85,7 @@ class MainActivity : ComponentActivity() {
             )
         )
 
-        ProvideWindowInsets {
-            MainUI(navController)
-        }
+        MainUI(navController)
 
         currentComposer.endProviders()
     }
@@ -109,7 +96,7 @@ class MainActivity : ComponentActivity() {
         val drawerState = rememberDrawerState(DrawerValue.Closed)
         val scope = rememberCoroutineScope()
 
-        NavigationDrawer(
+        ModalNavigationDrawer(
             drawerContent = {
                 Column(Modifier.verticalScroll(rememberScrollState())) {
                     Routes.values().forEach { r ->
@@ -128,7 +115,7 @@ class MainActivity : ComponentActivity() {
                             textAlign = TextAlign.Center
                         )
                     }
-                    Spacer(Modifier.navigationBarsHeight())
+                    Spacer(Modifier.navigationBarsPadding())
                 }
             },
             drawerState = drawerState
@@ -155,7 +142,7 @@ class MainActivity : ComponentActivity() {
             ){
                 NavHost(
                     navController = navController,
-                    startDestination = Routes.RustJniUI.name,
+                    startDestination = Routes.StaggeredGrid.name,
                     modifier = Modifier.padding(it),
                     builder = navGraphBuilder(navController)
                 )

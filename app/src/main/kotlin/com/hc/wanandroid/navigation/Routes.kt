@@ -39,6 +39,7 @@ enum class Routes {
     JdUI,
     LazyStaggeredUI,
     TimelineUI,
+    StaggeredGrid,
     RustJniUI
 }
 
@@ -125,6 +126,10 @@ fun navGraphBuilder(navController: NavController): NavGraphBuilder.() -> Unit = 
 
     composable(Routes.RustJniUI.name){
         RustJniUI()
+    }
+
+    composable(Routes.StaggeredGrid.name){
+        StaggeredGridUI()
     }
 }
 

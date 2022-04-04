@@ -58,6 +58,6 @@ dependencies {
     implementation(Dep.Compose.uiUtil)
     implementation(Dep.Accompanist.flowLayout)
     implementation(Dep.Accompanist.pager)
-    implementation(Dep.Accompanist.insets)
+//    implementation(Dep.Accompanist.insets)
     implementation(Dep.Accompanist.swiperefresh)
 }

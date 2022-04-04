@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.common.BrowsePicture
 import com.google.accompanist.common.BrowsePictureState
-import com.google.accompanist.insets.navigationBarsHeight
 
 @Composable
 fun MyBrowsePicture() {
@@ -68,6 +68,6 @@ fun MyBrowsePicture() {
 
         }
 
-        Spacer(Modifier.navigationBarsHeight())
+        Spacer(Modifier.navigationBarsPadding())
     }
 }

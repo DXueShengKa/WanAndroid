@@ -35,8 +35,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.common.BrowsePicture
-import com.google.accompanist.common.BrowsePictureState
-import com.google.accompanist.insets.navigationBarsHeight
 import com.hc.wanandroid.entity.CoinInfo
 import com.hc.wanandroid.entity.UserInfo
 import com.hc.wanandroid.net.UserApi

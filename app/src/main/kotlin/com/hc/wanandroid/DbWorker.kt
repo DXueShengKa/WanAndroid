@@ -29,6 +29,7 @@ class DbWorker(appContext: Context, workerParams: WorkerParameters) :
         ).appDatabase()
 
         withContext(Dispatchers.IO){
+
             val citySql = applicationContext.assets.open("address/city.sql").bufferedReader().lines()
             val countySql = applicationContext.assets.open("address/county.sql").bufferedReader().lines()
             val provinceSql = applicationContext.assets.open("address/province.sql").bufferedReader().lines()

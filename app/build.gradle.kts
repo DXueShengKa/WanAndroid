@@ -132,6 +132,8 @@ dependencies {
     implementation(Dep.AndroidX.workKtx)
     implementation(Dep.AndroidX.startup)
     implementation(Dep.AndroidX.glance)
+    implementation(Dep.AndroidX.paging)
+    implementation(Dep.AndroidX.swiperefreshlayout)
     implementation(Dep.AndroidX.Camera.camera2)
     implementation(Dep.AndroidX.Camera.lifecycle)
     implementation(Dep.AndroidX.Camera.view)
@@ -141,7 +143,7 @@ dependencies {
     implementation(Dep.AndroidX.Room.paging)
     ksp(Dep.AndroidX.Room.compiler)
 
-    implementation(Dep.Accompanist.insets)
+//    implementation(Dep.Accompanist.insets)
     implementation(Dep.Accompanist.pager)
     implementation(Dep.Accompanist.flowLayout)
     implementation(Dep.Accompanist.swiperefresh)

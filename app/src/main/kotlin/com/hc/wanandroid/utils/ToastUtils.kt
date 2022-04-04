@@ -7,33 +7,22 @@ import java.lang.ref.WeakReference
 
 object ToastUtils {
     @JvmStatic
-    private var toastReference: WeakReference<Toast>? = null
+    private val toast by weakReference { Toast(App.app) }
 
     @JvmStatic
     fun showShort(text: CharSequence?) {
-        toastReference?.get()?.apply {
+        toast.apply {
             duration = Toast.LENGTH_SHORT
             setText(text)
-            show()
-        } ?: App.app.run {
-            Toast.makeText(this, text, Toast.LENGTH_SHORT)
-        }.apply {
-            toastReference = WeakReference(this)
             show()
         }
     }
 
     @JvmStatic
     fun showLong(text: CharSequence?) {
-
-        toastReference?.get()?.apply {
+        toast.apply {
             duration = Toast.LENGTH_LONG
             setText(text)
-            show()
-        } ?: App.app.run {
-            Toast.makeText(this, text, Toast.LENGTH_LONG)
-        }.apply {
-            toastReference = WeakReference(this)
             show()
         }
     }

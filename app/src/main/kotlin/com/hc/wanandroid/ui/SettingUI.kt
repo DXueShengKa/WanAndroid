@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -132,7 +132,10 @@ fun Te() {
     ) {
         items(60) {
             val s = if (it % 2 == 0) 80 else 60
-            Card(Modifier.fillMaxWidth().height(s.dp)) {
+            Card(
+                Modifier
+                    .fillMaxWidth()
+                    .height(s.dp)) {
                 Text(it.toString())
             }
         }

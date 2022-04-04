@@ -14,7 +14,7 @@ object Dep {
         /**
          * 协程
          */
-        private const val coroutinesVersion = "1.6.0"
+        private const val coroutinesVersion = "1.7.0"
         private const val serializationVersion = "1.3.1"
 
         const val stdlibJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${version}"
@@ -42,11 +42,13 @@ object Dep {
     object AndroidX {
 
         const val workKtx = "androidx.work:work-runtime-ktx:2.7.1"
-        const val paging = "androidx.paging:paging-runtime-ktx:3.1.0-alpha04"
+        const val paging = "androidx.paging:paging-runtime:3.1.1"
         const val core = "androidx.core:core:1.7.0"
         const val startup = "androidx.startup:startup-runtime:1.0.0"
         const val splashscreen = "androidx.core:core-splashscreen:1.0.0-alpha02"
         const val glance = "androidx.glance:glance-appwidget:1.0.0-alpha02"
+        //用于RecyclerView的嵌套，compose可实现瀑布流之后不需要
+        const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
         object Room {
             private const val version = "2.4.1"
@@ -71,17 +73,17 @@ object Dep {
     }
 
     object Compose {
-        const val version = "1.2.0-alpha04"
+        const val version = "1.2.0-alpha05"
         const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:$version"
         const val material = "androidx.compose.material:material:$version"
         const val ui = "androidx.compose.ui:ui:$version"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val uiTooling = "androidx.compose.ui:ui-tooling:$version"
         const val uiUtil = "androidx.compose.ui:ui-util:$version"
-        const val material3 = "androidx.compose.material3:material3:1.0.0-alpha05"
+        const val material3 = "androidx.compose.material3:material3:1.0.0-alpha07"
 
         const val pagingCompose = "androidx.paging:paging-compose:1.0.0-alpha14"
-        const val navigationCompose = "androidx.navigation:navigation-compose:2.5.0-alpha02"
+        const val navigationCompose = "androidx.navigation:navigation-compose:2.5.0-alpha03"
 
         const val constraintLayoutCompose = "androidx.constraintlayout:constraintlayout-compose:1.0.0"
         const val activityCompose = "androidx.activity:activity-compose:1.4.0"
@@ -101,7 +103,6 @@ object Dep {
         private const val version = "0.24.2-alpha"
         const val flowLayout = "com.google.accompanist:accompanist-flowlayout:$version"
         const val pager = "com.google.accompanist:accompanist-pager:$version"
-        const val insets = "com.google.accompanist:accompanist-insets:$version"
         const val swiperefresh = "com.google.accompanist:accompanist-swiperefresh:$version"
     }
 
@@ -118,7 +119,7 @@ object Dep {
     }
 
     object Hilt {
-        const val version = "2.40.3"
+        const val version = "2.41"
         const val hiltAndroid = "com.google.dagger:hilt-android:$version"
         const val hiltAndroidCompiler = "com.google.dagger:hilt-android-compiler:$version"
 
